@@ -8,7 +8,7 @@ def show_large_neos(neos, min_size=50):
     for n in neos:
         try:
             min_d = float(n["Diameter (m)"].split(" - ")[0])
-        except:
+        except:  # noqa: E722
             continue  
         if min_d >= min_size:
             large_neos.append(n)
