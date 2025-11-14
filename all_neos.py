@@ -48,13 +48,5 @@ def all_neos():
                     "Miss Distance (km)": f'{float(obj["close_approach_data"][0]["miss_distance"]["kilometers"]):.0f}',
                     "URL": obj.get("nasa_jpl_url")
                 })
+    return neos
 
-    # Print 10 at a time
-    page_size = 10
-    total = len(neos)
-    for i in range(0, total, page_size):
-        print(f"\n=== Showing NEOs {i + 1} to {min(i + page_size, total)} of {total} ===\n")
-        print(tabulate(neos[i:i+page_size], headers="keys", tablefmt="fancy_grid"))
-        
-        if i + page_size < total:
-            input("Press Enter to see the next page...")
