@@ -3,7 +3,12 @@ from large_neos import show_large_neos
 
 
 def main_menu():
-    neos = all_neos()  # fetch once and get the list
+    '''Main menu for NEO explorer
+    This allows the user to choose options to gather information from NASA's NEO API.
+    Data is fetched for the last 4 weeks at startup for efficiency.
+    '''
+
+    neos = all_neos()
 
     while True:
         print("Welcome to NASA Near Earth Objects (NEO) explorer! 🚀")

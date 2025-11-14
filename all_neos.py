@@ -2,17 +2,36 @@ import datetime
 
 import requests
 
-from config import API_KEY, ENDPOINT
+from config import API_KEY, ENDPOINT, FETCH_DAYS
 
 
 def all_neos():
+    '''Fetch all Near Earth Objects (NEOs) from the NASA API for the past 28 days(4weeks)
 
-    # Fetch all NEOs from the last 4 weeks and print them 10 at a time in a nice table.
+    Returns:
+        Name
+        Hazardous status
+        Diameter range
+        Close approach date
+        Velocity
+        Miss distance
+        URL for NASA website
+    '''
 
     today = datetime.date.today()
-    start_date = today - datetime.timedelta(days=28)
+    start_date = today - datetime.timedelta(days=FETCH_DAYS)
 
     def fetch_range(start, end):
+        '''Fetch function for a date range
+        
+        Args:
+            start (date): Start date
+            end (date): End date
+            
+        Returns:
+            dict: response from the API
+        '''
+
         params = {
             "start_date": start.isoformat(),
             "end_date": end.isoformat(),
@@ -22,7 +41,6 @@ def all_neos():
         resp.raise_for_status()
         return resp.json()
 
-    # Fetch data in 7-day chunks
     all_data = []
     chunk_start = start_date
     while chunk_start < today:
@@ -32,7 +50,6 @@ def all_neos():
         all_data.append(data)
         chunk_start = chunk_end + datetime.timedelta(days=1)
 
-    # Flatten NEOs
     neos = []
     for chunk in all_data:
         for _date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
