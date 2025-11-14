@@ -1,7 +1,9 @@
-import requests
 import datetime
-from tabulate import tabulate
+
+import requests
+
 from config import API_KEY, ENDPOINT
+
 
 def all_neos():
 
@@ -33,7 +35,7 @@ def all_neos():
     # Flatten NEOs
     neos = []
     for chunk in all_data:
-        for date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
+        for _date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
             for obj in daily_neos:
                 if not obj.get("close_approach_data"):
                     continue
