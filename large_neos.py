@@ -1,9 +1,10 @@
 from tabulate import tabulate
 
+
 def show_large_neos(neos, min_size=50):
-    
+
     # Prints all NEOs with a minimum diameter >= min_size meters.
-    
+
     large_neos = []
     for n in neos:
         try:

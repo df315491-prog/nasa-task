@@ -1,0 +1,28 @@
+[tool.ruff]
+# Use Ruff as both linter and formatter
+line-length = 88
+target-version = "py311"   # or your python version
+
+# Linting rules to enable (default is good)
+select = [
+    "E",  # Pycodestyle errors
+    "F",  # Pyflakes
+    "W",  # Pycodestyle warnings
+    "I",  # Import sorting
+    "N",  # PEP8 naming
+    "B",  # Bugbear
+    "UP"  # Python modernization
+]
+
+ignore = [
+    "E501",  # optional: ignore long line warnings (formatter handles it)
+]
+
+# Enable autofix support
+fix = true
+
+[tool.ruff.format]
+# Use the Ruff formatter
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

@@ -1,7 +1,8 @@
-import requests
 import datetime
 
-API_KEY = "ibao9Xte7MmWeJG8TdVq07bfA85pNKWFeTUzwwwA"  
+import requests
+
+API_KEY = "ibao9Xte7MmWeJG8TdVq07bfA85pNKWFeTUzwwwA"
 ENDPOINT = "https://api.nasa.gov/neo/rest/v1/feed"
 
 def all_neos():
@@ -34,7 +35,7 @@ def all_neos():
     # Flatten NEOs
     neos = []
     for chunk in all_data:
-        for date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
+        for _date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
             for obj in daily_neos:
                 if not obj.get("close_approach_data"):
                     continue
