@@ -48,6 +48,7 @@ def all_neos():
                     "Miss Distance (km)": f'{float(obj["close_approach_data"][0]["miss_distance"]["kilometers"]):.0f}',
                     "URL": obj.get("nasa_jpl_url")
                 })
+    return neos
 
     # Print 10 at a time
     page_size = 10

@@ -2,20 +2,19 @@ from tabulate import tabulate
 
 def show_large_neos(neos, min_size=50):
     
-    # Prints all NEOs with a maximum diameter >= min_size meters
+    # Prints all NEOs with a minimum diameter >= min_size meters.
     
     large_neos = []
     for n in neos:
-        # Extract max diameter from the "Diameter (m)" string
         try:
-            max_d = float(n["Diameter (m)"].split(" - ")[1])
+            min_d = float(n["Diameter (m)"].split(" - ")[0])
         except:
             continue  
-        if max_d >= min_size:
+        if min_d >= min_size:
             large_neos.append(n)
 
     if not large_neos:
-        print(f"No NEOs found with diameter >= {min_size} meters.")
+        print(f"No NEOs found with minimum diameter >= {min_size} meters.")
         return
 
     # output 10 at a time
