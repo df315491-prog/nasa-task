@@ -1,10 +1,9 @@
 import requests
 import datetime
-import pprint
+from tabulate import tabulate
 
-API_KEY = "ibao9Xte7MmWeJG8TdVq07bfA85pNKWFeTUzwwwA"   
+API_KEY = "ibao9Xte7MmWeJG8TdVq07bfA85pNKWFeTUzwwwA"  
 ENDPOINT = "https://api.nasa.gov/neo/rest/v1/feed"
-
 
 today = datetime.date.today()
 start_date = today - datetime.timedelta(days=28)
@@ -29,5 +28,19 @@ while chunk_start < today:
     all_data.append(data)
     chunk_start = chunk_end + datetime.timedelta(days=1)
 
-pp = pprint.PrettyPrinter(indent=2)
-pp.pprint(all_data)
+neos = []
+for chunk in all_data:
+    for date_str, daily_neos in chunk.get("near_earth_objects", {}).items():
+        for obj in daily_neos:
+            neos.append({
+                "Name": obj.get("name"),
+                "Hazardous": "Yes" if obj.get("is_potentially_hazardous_asteroid") else "No",
+                "Diameter (m)": f'{obj["estimated_diameter"]["meters"]["estimated_diameter_min"]:.1f} - {obj["estimated_diameter"]["meters"]["estimated_diameter_max"]:.1f}',
+                "Close Approach": obj["close_approach_data"][0]["close_approach_date"],
+                "Velocity (km/s)": f'{float(obj["close_approach_data"][0]["relative_velocity"]["kilometers_per_second"]):.2f}',
+                "Miss Distance (km)": f'{float(obj["close_approach_data"][0]["miss_distance"]["kilometers"]):.0f}',
+                "URL": obj.get("nasa_jpl_url")
+            })
+
+
+print(tabulate(neos, headers="keys", tablefmt="fancy_grid"))
